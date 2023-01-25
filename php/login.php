@@ -12,7 +12,7 @@ session_start();
         <style>
             html, body{
                 height: 100%;
-                background-color: #fff4d4;
+                background-color: #fffaf1;
             }
             .btn:hover {
                 box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
@@ -55,10 +55,10 @@ session_start();
                     <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
                     <span style="color: red"><?php echo $pass_error ?></span>
                 </div>
-                <button type="submit" class="mb-3 col-12 btn btn-outline-secendory" style="background-color: #fff4d4">login</button>
-                <a href="user.php" class="mb-3 col-12 btn btn-outline-secondry" style="background-color: #fff4d4">home page</a>
+                <button type="submit" class="mb-3 col-12 btn btn-outline-secendory" style="background-color: #fff4d4">Login</button>
+                <a href="home.php" class="mb-3 col-12 btn btn-outline-secondry" style="background-color: #fff4d4">Home Page</a>
                 <label for="signup" class="form-label">You Don't Have An Account? Create One</label>
-                <button type="submit" class="mb-3 col-12 btn btn-outline-secendory" style="background-color: #fff4d4">Signup</button>
+                <a href="signup.php" class="mb-3 col-12 btn btn-outline-secondry" style="background-color: #fff4d4">Signup</a>
             </form>
         </div>
     </body>

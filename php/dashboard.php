@@ -37,10 +37,11 @@ if (isset($_GET['page'])) {
         <a href="/" class="logo">Burger<span class="yellow">Land</span></a>
 
         <nav class="navbar">
-            <a href="#home">Home</a>
-            <a href="#services">Menu</a>
-            <a href="#about">About Us</a>
-            <a href="#contact">Contact Us</a>
+            <a href="home.php">Home</a>
+            <a href="home.php#services">Services</a>
+            <a href="menu.php">Menu</a>
+            <a href="home.php#about">About Us</a>
+            <a href="home.php#footer">Contact Us</a>
             <img class="avatar" src="../images/admin-avatar.png" alt="...">
             <p class="user">Admin</p>
         </nav>

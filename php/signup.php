@@ -12,7 +12,7 @@ session_start();
         <style>
             html, body{
                 height: 100%;
-                background-color: #fff4d4;
+                background-color: #fffaf1;
             }
             .btn:hover {
                 box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
@@ -61,7 +61,7 @@ session_start();
                     <span style="color: red"><?php echo $pass_error ?></span>
                 </div>
                 <button type="submit" class="mb-3 col-12 btn btn-outline-secendory" style="background-color: #fff4d4">Signup</button>
-                <a href="user.php" class="mb-3 col-12 btn btn-outline-secondry" style="background-color: #fff4d4">Home page</a>
+                <a href="home.php" class="mb-3 col-12 btn btn-outline-secondry" style="background-color: #fff4d4">Home page</a>
             </form>
         </div>
     </body>
