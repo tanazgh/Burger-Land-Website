@@ -27,11 +27,10 @@ if (isset($_GET['page'])) {
         <title>Dashboard</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="../css/styles.css">
-        <style>
-            html, body{
-                height: 100%;
-            } <?php echo $sty; ?></style>
+        <link rel="stylesheet" href="../css/styles.css?v=<?php echo time(); ?>">
+        <style>html, body{height: 100%;} 
+        <?php echo $sty; ?>
+        </style>
     </head>
     <body style="height: 100%">
         <header class="header">
@@ -41,30 +40,30 @@ if (isset($_GET['page'])) {
             <a href="#home">Home</a>
             <a href="#services">Menu</a>
             <a href="#about">About Us</a>
-            <a href="#footer">Contact Us</a>
-            <a href="" class="btn">Login</a>
+            <a href="#contact">Contact Us</a>
+            <p class=user>Admin</p>
         </nav>
 
         </header>
         <div class="container-fluid" style="height: 100%">
             <form action="" method="post" style="height: 100%">
-            <div class="row" style="height: 100%">
+            <div class="row" style="height: 100%; margin-top: 8rem;">
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse" style="background-color: #fff4d4">
                 <div class="position-sticky pt-3 sidebar-sticky">
                     <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="dashboard.php?page=home">
+                        <a class="nav-link active nav-link-color: black" aria-current="page" href="dashboard.php?page=home" style="color: black">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home align-text-bottom" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         Dashboard
                         </a>
                     </li>
                     <li class='nav-item'>
-                        <a class='nav-link' href='dashboard.php?page=post'>
-                        Posts
+                        <a class='nav-link' href='dashboard.php?page=post' style="color: black">
+                        Food
                         </a>
                     </li>
                     <li class='nav-item'>
-                        <a class='nav-link' href='dashboard.php?page=cat'>
+                        <a class='nav-link' href='dashboard.php?page=cat' style="color: black">
                         Category
                         </a>
                     </li>
@@ -72,10 +71,10 @@ if (isset($_GET['page'])) {
                 </div>
                 </nav>
 
-                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="background-color: #fffaf1">
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="background-color: #fffaf1;">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Dashboard</h1>
-                    <button type="submit" class="btn btn-secondary" name="newpost" value=1>NEW POST</button>
+                    <button type="submit" class="mybtn" name="newpost" value=1>NEW FOOD</button>
                     <?php
                         if (isset($_POST['newpost'])) {
                             $_SESSION['newpost'] = 1;
@@ -84,7 +83,7 @@ if (isset($_GET['page'])) {
                             $_SESSION['newpost'] = 0;
                         }
                     ?>
-                    <button type="submit" class="btn btn-secondary" name="newcat" value=1>NEW CATEGORY</button>
+                    <button type="submit" class="mybtn" name="newcat" value=1>NEW CATEGORY</button>
                     <?php
                         if (isset($_POST['newcat'])) {
                             $_SESSION['newcat'] = 1;

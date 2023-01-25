@@ -154,6 +154,7 @@ section {
   padding: 1rem;
   border-radius: 0.5rem;
   transition: var(--transition);
+  border: 0;
 }
 
 .mybtn:hover {
@@ -627,4 +628,18 @@ section.app .content .links img {
 
 .scroll-top.show {
   display: block;
+}
+
+/* tanaz section */
+.user {
+  font-weight: 500;
+  padding-top: 1.4rem;
+  padding-left: 3px;
+  color: var(--yellow);
+  border:1px solid black;    
+  height:55px;
+  border-radius:50%;
+  -moz-border-radius:50%;
+  -webkit-border-radius:50%;
+  width:55px;
 }
