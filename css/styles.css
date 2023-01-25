@@ -154,6 +154,7 @@ section {
   padding: 1rem;
   border-radius: 0.5rem;
   transition: var(--transition);
+  border: 0;
 }
 
 .mybtn:hover {
