@@ -624,3 +624,36 @@ section.app .content .links img {
 .scroll-top.show {
   display: block;
 }
+
+/* tanaz section */
+.user {
+  font-weight: 500;
+  padding-top: 1.4rem;
+  padding-left: 3px;
+  color: var(--yellow);
+  border:1px solid black;    
+  height:55px;
+  border-radius:50%;
+  -moz-border-radius:50%;
+  -webkit-border-radius:50%;
+  width:55px;
+}
+
+/* negin section */
+.myalbum{
+  background-color: var(--bg-yellow) !important;
+}
+
+.orderbtn{
+  color: var(--yellow);
+  border-color: var(--yellow);
+  border: 2px solid var(--yellow);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.price{
+  font-size: 20px;
+  color: var(--deep-yellow);
+  font-weight: bold;
+}
