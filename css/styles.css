@@ -48,12 +48,12 @@ img {
 
 .page-header {
   position: relative;
+  margin-top: 8rem;
   margin-bottom: 45px;
   padding: 150px 0 90px 0;
   text-align: center;
   background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(../images/page-header.jpg);
   background-position: center;
-  background-repeat: no-repeat;
   background-size: cover;
 }
 
@@ -123,13 +123,13 @@ section {
   justify-content: space-between;
   box-shadow: var(--box-shadow);
   z-index: 1000;
+  
 }
 
 .logo {
   font-size: 3.6rem;
   font-weight: 700;
 }
-
 
 .navbar a {
   font-weight: 500;
@@ -147,7 +147,7 @@ section {
   border-color: var(--yellow);
 }
 
-.btn {
+.mybtn {
   display: inline-block;
   color: var(--yellow);
   background-color: var(--btn-yellow);
@@ -156,7 +156,7 @@ section {
   transition: var(--transition);
 }
 
-.btn:hover {
+.mybtn:hover {
   box-shadow: var(--box-shadow);
 }
 
@@ -212,6 +212,10 @@ section {
   .navbar.show {
     top: 9rem;
   }
+}
+
+.myalbum{
+  background-color: var(--bg-yellow) !important;
 }
 
 /* Home */
