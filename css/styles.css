@@ -214,10 +214,6 @@ section {
   }
 }
 
-.myalbum{
-  background-color: var(--bg-yellow) !important;
-}
-
 /* Home */
 .home {
   padding-top: 13rem;
