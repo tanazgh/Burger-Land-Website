@@ -41,7 +41,8 @@ if (isset($_GET['page'])) {
             <a href="#services">Menu</a>
             <a href="#about">About Us</a>
             <a href="#contact">Contact Us</a>
-            <p class=user>Admin</p>
+            <img class="avatar" src="../images/admin-avatar.png" alt="...">
+            <p class="user">Admin</p>
         </nav>
 
         </header>

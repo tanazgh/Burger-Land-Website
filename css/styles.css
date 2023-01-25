@@ -632,12 +632,8 @@ section.app .content .links img {
   padding-top: 1.4rem;
   padding-left: 3px;
   color: var(--yellow);
-  border:1px solid black;    
-  height:55px;
-  border-radius:50%;
-  -moz-border-radius:50%;
-  -webkit-border-radius:50%;
   width:55px;
+  margin-left: 1rem;
 }
 
 /* negin section */
@@ -653,8 +649,25 @@ section.app .content .links img {
   padding: 0.5rem;
 }
 
+.orderbtn:hover{
+  color: black;
+  background-color: var(--yellow);
+  box-shadow: var(--box-shadow);
+}
+
+.current{
+  color: var(--yellow);
+  border-color: var(--yellow) !important;
+}
+
 .price{
   font-size: 20px;
   color: var(--deep-yellow);
   font-weight: bold;
+}
+
+.avatar{
+  width: 60px;
+  border-radius: 100%;
+  border: 2px solid rgb(83, 70, 70);
 }
