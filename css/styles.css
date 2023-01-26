@@ -671,3 +671,8 @@ section.app .content .links img {
   border-radius: 100%;
   border: 2px solid rgb(83, 70, 70);
 }
+
+.cat{
+  text-align: center;
+  margin-top: 10px;
+}
