@@ -676,3 +676,22 @@ section.app .content .links img {
   text-align: center;
   margin-top: 10px;
 }
+
+.plus, .minus{
+  border: 0;
+  background-color: white;
+  color: var(--deep-yellow);
+  padding: 5px;
+}
+
+.sidebar{
+  width: 27%;
+  margin: 1rem 0.5rem;
+  background-color: var(--btn-yellow);
+  /* border: 1px solid var(--yellow); */
+  padding: 1rem;
+}
+.menu{
+  width: 80%;
+  margin: 1rem 0.5rem;
+}

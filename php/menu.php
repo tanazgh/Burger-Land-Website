@@ -1,11 +1,12 @@
 <?php 
+session_start();
 require('connection.php');
 
-$sql_burgers = "SELECT f.id, f.name, f.description, f.img_addr, f.price
+$sql_burgers = "SELECT f.id, f.name, f.description, f.img_addr, f.price, f.qty
               from food as f join cat as c on f.cat_id = c.id where c.title = 'burger'";
-$sql_fries = "SELECT f.id, f.name, f.description, f.img_addr, f.price
+$sql_fries = "SELECT f.id, f.name, f.description, f.img_addr, f.price, f.qty
               from food as f join cat as c on f.cat_id = c.id where c.title = 'fries'";
-$sql_drinks = "SELECT f.id, f.name, f.description, f.img_addr, f.price
+$sql_drinks = "SELECT f.id, f.name, f.description, f.img_addr, f.price, f.qty
               from food as f join cat as c on f.cat_id = c.id where c.title = 'drink'";
 ?>
 
@@ -22,7 +23,6 @@ $sql_drinks = "SELECT f.id, f.name, f.description, f.img_addr, f.price
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="../js/menu.js"></script>
         <link rel="stylesheet" href="../css/styles.css?v=<?php echo time(); ?>">
-        <link rel="stylesheet" href="/assets/font/bootstrap-icons.css">
     </head>
     <body>
 
@@ -52,8 +52,13 @@ $sql_drinks = "SELECT f.id, f.name, f.description, f.img_addr, f.price
                 </div>
             </div>
         </div>
+        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center sidebar rounded">
+            you
+        </div>
+        <div class="menu">
         <!-- burger menu -->
-        <div class="album py-5 bg-light myalbum">
+        <div class="album py-5 bg-light myalbum rounded">
             <h1 class="cat">Burgers</h1>
             <hr>
             <div class="container">
@@ -61,18 +66,21 @@ $sql_drinks = "SELECT f.id, f.name, f.description, f.img_addr, f.price
                     <?php
                         if (($result=mysqli_query($con,$sql_burgers))){
                             while($row=mysqli_fetch_row($result)){
-                                $food_id = $row[0]; $name = $row[1]; $description = $row[2]; $img_addr = $row[3]; $price = $row[4];
+                                $food_id = $row[0]; $name = $row[1]; $description = $row[2]; $img_addr = $row[3]; $price = $row[4]; $qty = $row[5];
                                 echo "<div class='col'><div class='card shadow-sm'>";
                                 echo "<img  class='bd-placeholder-img card-img-top' src='../images/$img_addr' width='100%' height='30%' alt='...'>";
                                 echo "<div class='card-body'>";
                                 echo "<h3 class='card-title'>$name</h3>";
                                 echo "<p class='card-text'>$description</p>";
                                 echo "<div class='d-flex justify-content-between align-items-center'>";
-                                echo "<a onclick='addToCart(" . $food_id . ")' href='#' class='orderbtn bi bi-cart-plus'>";
+                                echo "<div id='number$food_id'>";
+                                echo "<a onclick='addToCart(" . $food_id . ", " . $qty . ")' class='orderbtn bi bi-cart-plus'>";
                                 echo "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-cart-plus' viewBox='0 0 16 16'>" . 
                                         "<path d='M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z'/>" .
                                         "<path d='M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z'/>" .
-                                            "</svg>" . "add to cart </a>";
+                                     "</svg>";
+                                echo "add to cart</a>";
+                                echo "</div>";
                                 echo "<small class='price'>" . $price . "$</small>";
                                 echo "</div></div></div></div>";
                             }
@@ -82,6 +90,7 @@ $sql_drinks = "SELECT f.id, f.name, f.description, f.img_addr, f.price
                 </div>
             </div>
         </div>
+
         <!-- fries menu -->
         <div class="album py-5 bg-light myalbum">
             <h1 class="cat">Fries</h1>
@@ -141,6 +150,8 @@ $sql_drinks = "SELECT f.id, f.name, f.description, f.img_addr, f.price
                     ?> 
                 </div>
             </div>
+        </div>
+        </div>
         </div>
     </body>
 </html>    
