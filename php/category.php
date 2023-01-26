@@ -22,11 +22,11 @@ if (isset($_POST['submit'])) {
     
     if(!empty($title)) {
         if ($_SESSION['newcat'] == 1) {
-            $sql = "INSERT INTO CAT (NAME)
+            $sql = "INSERT INTO cat (title)
             VALUES ('$title')";
         }else {
             $sql = "UPDATE cat
-                    SET name='$title'
+                    SET title='$title'
                     WHERE id='$id'";
         }
         if (mysqli_query($con, $sql)) {
@@ -48,18 +48,33 @@ if (isset($_POST['submit'])) {
         <title>Category</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <style>
+            .mybtn {
+                display: inline-block;
+                color: black;
+                background-color: #fff4d4;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                transition: all 0.2s linear;
+                border: 0;
+                }
+
+            .mybtn:hover {
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+            }
+        </style>
     </head>
-    <body class="text-center" style="margin: 8rem">
-        <main class="form-signin w-400" style="padding-left: 14rem">
-            <form style="width: 600px" action="" method="post">
-                <h1 class="h3 mb-3 fw-normal">New Category</h1>
+    <body class="text-center" style="margin: 8rem; background-color: #fffaf1;">
+        <main class="form-signin w-400 d-flex justify-content-center align-items-center">
+            <form style="width: 600px; background-color: #ffc554;" action="" method="post" class="shadow col-4 p-5 rounded">
+                <h1 class="h3 mb-3 fw-normal form-label" class="">New Category</h1>
                 <div class="form-floating">
                 <?php
                     echo "<input type='text' class='form-control' placeholder='Title' name='title' value=$ans[1]>";
                 ?>
-                <label for="floatingInput">Title</label>
+                <label for="floatingInput" class="form-label">Title</label>
                 </div>
-                <button class="w-100 btn btn-lg btn-secondary" type="submit" name="submit" value="1">Submit</button>
+                <button class="w-100 btn-lg mybtn" type="submit" name="submit" value="1">Submit</button>
                 <span style="color: red;"><?php echo $error; ?><span>
             </form>
         </main>
