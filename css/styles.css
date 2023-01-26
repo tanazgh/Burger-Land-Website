@@ -684,7 +684,7 @@ section.app .content .links img {
   padding: 5px;
 }
 
-.sidebar{
+.mysidebar{
   width: 27%;
   margin: 1rem 0.5rem;
   background-color: var(--btn-yellow);
