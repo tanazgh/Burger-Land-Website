@@ -2,17 +2,18 @@
 
 session_start();
 
-$post_sql = "SELECT * FROM posts";
+
+$food_sql = "SELECT * FROM food";
 $cat_sql = "SELECT * FROM cat";
-$_SESSION['newpost'] = 0;
+$_SESSION['newfood'] = 0;
 $_SESSION['newcat'] = 0;
 $sty = "";
 
 if (isset($_GET['page'])) {
-    if ($_GET['page'] == 'post') {
+    if ($_GET['page'] == 'food') {
         $sty = "#cat{display: none;}";
     } else if ($_GET['page'] == 'cat') {
-        $sty = "#post{display: none;}";
+        $sty = "#food{display: none;}";
     }
 }
      
@@ -43,7 +44,8 @@ if (isset($_GET['page'])) {
             <a href="home.php#about">About Us</a>
             <a href="home.php#footer">Contact Us</a>
             <img class="avatar" src="../images/admin-avatar.png" alt="...">
-            <p class="user">Admin</p>
+            <p class="user"><?php echo $_SESSION['username']; ?></p>
+            <a class= 'mybtn' href="sign_out.php" style="margin-left: 2rem;">Signout</a>
         </nav>
 
         </header>
@@ -76,13 +78,13 @@ if (isset($_GET['page'])) {
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="background-color: #fffaf1;">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Dashboard</h1>
-                    <button type="submit" class="mybtn" name="newpost" value=1>NEW FOOD</button>
+                    <button type="submit" class="mybtn" name="newfood" value=1>NEW FOOD</button>
                     <?php
-                        if (isset($_POST['newpost'])) {
-                            $_SESSION['newpost'] = 1;
-                            header("location: post.php");
+                        if (isset($_POST['newfood'])) {
+                            $_SESSION['newfood'] = 1;
+                            header("location: food.php");
                         }else{
-                            $_SESSION['newpost'] = 0;
+                            $_SESSION['newfood'] = 0;
                         }
                     ?>
                     <button type="submit" class="mybtn" name="newcat" value=1>NEW CATEGORY</button>
@@ -99,7 +101,7 @@ if (isset($_GET['page'])) {
                     <h4>Posts:</h4>
                     <?php
                         echo "<table class='table table-striped'><tr><th>#</th><th>Title</th><th>Author</th><th>Category</th><th>Option</th></tr>";
-                        if (($result=mysqli_query($con,$post_sql)))
+                        if (($result=mysqli_query($con,$food_sql)))
                         {
 
                             while($row=mysqli_fetch_row($result))
