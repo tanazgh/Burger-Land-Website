@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+require('connection.php');
 
 
 $food_sql = "SELECT * FROM food";
@@ -62,7 +63,7 @@ if (isset($_GET['page'])) {
                         </a>
                     </li>
                     <li class='nav-item'>
-                        <a class='nav-link' href='dashboard.php?page=post' style="color: black">
+                        <a class='nav-link' href='dashboard.php?page=food' style="color: black">
                         Food
                         </a>
                     </li>
@@ -97,10 +98,10 @@ if (isset($_GET['page'])) {
                         }
                     ?>
                 </div>
-                <div class="container-fluid" id="post">
-                    <h4>Posts:</h4>
+                <div class="container-fluid" id="food">
+                    <h4>Foods:</h4>
                     <?php
-                        echo "<table class='table table-striped'><tr><th>#</th><th>Title</th><th>Author</th><th>Category</th><th>Option</th></tr>";
+                        echo "<table class='table table-striped'><tr><th>#</th><th>Name</th><th>Price</th><th>Category</th><th>Quantity</th><th>Option</th></tr>";
                         if (($result=mysqli_query($con,$food_sql)))
                         {
 
@@ -109,9 +110,9 @@ if (isset($_GET['page'])) {
                                     $id=$row[0];
                                     echo "<tr>";
                                     echo "<td>" . "#" . "</td><td>" . $row[1] . 
-                                    "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td>";
-                                    echo "<td> <a href='post.php?id=$id'><button type='button' class='btn btn-sm btn-outline-primary'>Edit</button></a> ";
-                                    echo " <a href='delete_post.php?id=$id'><button type='button' class='btn btn-sm btn-outline-danger'>Delete</button></a> </td>";
+                                    "</td><td>" . $row[4] . "</td><td>" . $row[2] . "</td><td>" . $row[5] ;
+                                    echo "<td> <a href='food.php?id=$id'><button type='button' class='btn btn-lg btn-outline-primary'>Edit</button></a> ";
+                                    echo " <a href='delete_food.php?id=$id'><button type='button' class='btn btn-lg btn-outline-danger'>Delete</button></a> </td>";
                                     echo "<tr/>";
                                 }
                             
@@ -132,8 +133,8 @@ if (isset($_GET['page'])) {
                                     echo "<tr>";
                                     echo "<td>" . $id . "</td><td>" . $row[1] . 
                                     "</td><td>" . "" . "</td><td>" . "" . "</td><td>" . "" . "</td>";
-                                    echo "<td> <a href='category.php?id=$id'><button type='button' class='btn btn-sm btn-outline-primary'>Edit</button></a> ";
-                                    echo " <a href='delete_cat.php?id=$id'><button type='button' class='btn btn-sm btn-outline-danger'>Delete</button></a> </td>";
+                                    echo "<td> <a href='category.php?id=$id'><button type='button' class='btn btn-lg btn-outline-primary'>Edit</button></a> ";
+                                    echo " <a href='delete_cat.php?id=$id'><button type='button' class='btn btn-lg btn-outline-danger'>Delete</button></a> </td>";
                                     echo "<tr/>";
                                 }
                             
