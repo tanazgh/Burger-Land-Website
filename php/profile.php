@@ -43,7 +43,8 @@ if (isset($_GET['page'])) {
             <a href="home.php#about">About Us</a>
             <a href="home.php#footer">Contact Us</a>
             <img class="avatar" src="../images/burger-avatar.jpg" alt="...">
-            <p class="user">User</p>
+            <p class="user"><?php echo $_SESSION['username']; ?></p>
+            <a class= 'mybtn' href="sign_out.php" style="margin-left: 2rem;">Signout</a>
         </nav>
 
         </header>

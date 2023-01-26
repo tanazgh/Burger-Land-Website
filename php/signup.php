@@ -1,5 +1,30 @@
 <?php
 session_start();
+require('connection.php');
+
+$error = "";
+
+if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['pswd'])) {
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $pass = $_POST['pswd'];
+    if (!empty($username) && !empty($email) && !empty($pass)) {
+        $users_sql = "SELECT * FROM user WHERE email = '$email'";
+        if (($result=mysqli_query($con,$users_sql))) {
+            if($row=mysqli_fetch_row($result)) {
+                $error = 'User already exists! Please Login';
+            }else {
+                $sql = "INSERT INTO user (username, pass, email)
+                        VALUES ('$username', '$pass', '$email')";
+                if (mysqli_query($con, $sql)) {
+                    header("location: login.php");
+                }  
+            }
+        }
+    }else {
+        $error = "Please fill all the parts!";
+    }
+}
 ?>
 
 <!doctype html>
@@ -21,47 +46,27 @@ session_start();
     </head>
 
     <body>
-        <?php
-        $email_correct = "negiiinn.nm@gmail.com";
-        $pass_correct = "1234";
-        $email_error = "";
-        $pass_error = "";
-        if (isset($_SESSION["signedin"]) && $_SESSION["signedin"] == '1'){
-            header('Location: dashboard.php');
-        }
-        if (isset($_POST['email']) && isset($_POST['pswd'])) {
-            $email = $_POST['email'];
-            $pass = $_POST['pswd'];
-            if (!empty($email) && !empty($pass) && $email == $email_correct && $pass == $pass_correct) {
-                $_SESSION['signedin'] = 1;
-                $_SESSION['username'] = $email;
-                header('Location: dashboard.php');
-            }elseif(!empty($email) && $email != $email_correct) {
-                $email_error = 'You must enter a correct email.';
-            }elseif(!empty($pass) && $pass != $pass_correct) {
-                $pass_error = 'You must enter a correct password.';
-            }
-        }
-        ?>
         <div class="d-flex justify-content-center align-items-center" style="height: 100%">
-            <form method="post" action="login.php" class="shadow col-4 p-3 rounded" style="background-color: #ffc554">
+            <form method="post" action="signup.php" class="shadow col-4 p-3 rounded" style="background-color: #ffc554">
                 <div class="mb-3">
-                    <label for="email" class="form-label">FullName:</label>
-                    <input type="username" class="form-control" id="fn" placeholder="Enter fullname" name="fullname">
-                    <span style="color: red"><?php echo $email_error ?></span>
+                    <label for="email" class="form-label">Username:</label>
+                    <input type="username" class="form-control" id="fn" placeholder="Enter username" name="username">
+                    
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email:</label>
                     <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-                    <span style="color: red"><?php echo $email_error ?></span>
+                    
                 </div>
                 <div class="mb-3">
                     <label for="pwd" class="form-label">Password:</label>
                     <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
-                    <span style="color: red"><?php echo $pass_error ?></span>
+                    <span style="color: red"><?php echo $error ?></span>
                 </div>
                 <button type="submit" class="mb-3 col-12 btn btn-outline-secendory" style="background-color: #fff4d4">Signup</button>
                 <a href="home.php" class="mb-3 col-12 btn btn-outline-secondry" style="background-color: #fff4d4">Home page</a>
+                <label for="login" class="form-label">You Already Have An Account? Login</label>
+                <a href="login.php" class="mb-3 col-12 btn btn-outline-secondry" style="background-color: #fff4d4">Login</a>
             </form>
         </div>
     </body>
