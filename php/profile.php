@@ -1,18 +1,22 @@
 <?php
 
 session_start();
+require('connection.php');
 
-$post_sql = "SELECT * FROM posts";
-$cat_sql = "SELECT * FROM cat";
-$_SESSION['newpost'] = 0;
-$_SESSION['newcat'] = 0;
+$id = $_SESSION['userid'];
+$info_sql = "SELECT * FROM user where id=$id";
+$preorder_sql = "SELECT c.id, c.date, f.name, o.order_qty
+                FROM cart c inner join `order` o on c.id = o.cart_id
+                inner join food f on f.id = o.food_id
+                where c.user_id = $id";
+$_SESSION['neworder'] = 0;
 $sty = "";
 
 if (isset($_GET['page'])) {
-    if ($_GET['page'] == 'post') {
-        $sty = "#cat{display: none;}";
-    } else if ($_GET['page'] == 'cat') {
-        $sty = "#post{display: none;}";
+    if ($_GET['page'] == 'info') {
+        $sty = "#preorder{display: none;}";
+    } else if ($_GET['page'] == 'preorder') {
+        $sty = "#info{display: none;}";
     }
 }
      
@@ -55,18 +59,18 @@ if (isset($_GET['page'])) {
                 <div class="position-sticky pt-3 sidebar-sticky">
                     <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active nav-link-color: black" aria-current="page" href="dashboard.php?page=home" style="color: black">
+                        <a class="nav-link active nav-link-color: black" aria-current="page" href="profile.php?page=home" style="color: black">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home align-text-bottom" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                         Profile
                         </a>
                     </li>
                     <li class='nav-item'>
-                        <a class='nav-link' href='dashboard.php?page=post' style="color: black">
+                        <a class='nav-link' href='profile.php?page=info' style="color: black">
                         Info
                         </a>
                     </li>
                     <li class='nav-item'>
-                        <a class='nav-link' href='dashboard.php?page=cat' style="color: black">
+                        <a class='nav-link' href='profile.php?page=preorder' style="color: black">
                         Pre Orders
                         </a>
                     </li>
@@ -77,31 +81,31 @@ if (isset($_GET['page'])) {
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="background-color: #fffaf1;">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Profile</h1>
-                    <button type="submit" class="mybtn" name="newpost" value=1>NEW ORDER</button>
+                    <button type="submit" class="mybtn" name="neworder" value=1>NEW ORDER</button>
                     <?php
-                        if (isset($_POST['newpost'])) {
-                            $_SESSION['newpost'] = 1;
-                            header("location: post.php");
+                        if (isset($_POST['neworder'])) {
+                            $_SESSION['neworder'] = 1;
+                            header("location: menu.php");
                         }else{
-                            $_SESSION['newpost'] = 0;
+                            $_SESSION['neworder'] = 0;
                         }
                     ?>
                 </div>
-                <div class="container-fluid" id="post">
+                <div class="container-fluid" id="info">
                     <h4>Info:</h4>
                     <?php
-                        echo "<table class='table table-striped'><tr><th>#</th><th>Title</th><th>Author</th><th>Category</th><th>Option</th></tr>";
-                        if (($result=mysqli_query($con,$post_sql)))
+                        echo "<table class='table table-striped'><tr><th>#</th><th>Username</th><th>Email</th><th>Password</th><th>Option</th></tr>";
+                        if (($result=mysqli_query($con,$info_sql)))
                         {
 
-                            while($row=mysqli_fetch_row($result))
+                            if($row=mysqli_fetch_row($result))
                                 {
                                     $id=$row[0];
                                     echo "<tr>";
                                     echo "<td>" . "#" . "</td><td>" . $row[1] . 
-                                    "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td>";
-                                    echo "<td> <a href='post.php?id=$id'><button type='button' class='btn btn-sm btn-outline-primary'>Edit</button></a> ";
-                                    echo " <a href='delete_post.php?id=$id'><button type='button' class='btn btn-sm btn-outline-danger'>Delete</button></a> </td>";
+                                    "</td><td>" . $row[3] . "</td><td>" . $row[2] . "</td>";
+                                    echo "<td> <a href='info.php?id=$id'><button type='button' class='btn btn-lg btn-outline-primary'>Edit</button></a> ";
+                                    echo "</td>";
                                     echo "<tr/>";
                                 }
                             
@@ -109,22 +113,27 @@ if (isset($_GET['page'])) {
                         echo "</table>";
                     ?>
                 </div>
-                <div class="container-fluid" id="cat">
+                <div class="container-fluid" id="preorder">
                     <h4>Pre Orders:</h4>
                     <?php
-                        echo "<table class='table table-striped'><tr><th>#</th><th>Name</th><th></th><th></th><th></th><th>Option</th></tr>";
-                        if (($result=mysqli_query($con,$cat_sql)))
+                        echo "<table class='table table-striped'><tr><th>#</th><th>Date</th><th>Food</th><th>Quantity</th><th></th><th></th></tr>";
+                        if (($result=mysqli_query($con,$preorder_sql)))
                         {
-
+                            $preid = 0;
                             while($row=mysqli_fetch_row($result))
                                 {
                                     $id=$row[0];
                                     echo "<tr>";
-                                    echo "<td>" . $id . "</td><td>" . $row[1] . 
-                                    "</td><td>" . "" . "</td><td>" . "" . "</td><td>" . "" . "</td>";
-                                    echo "<td> <a href='category.php?id=$id'><button type='button' class='btn btn-sm btn-outline-primary'>Edit</button></a> ";
-                                    echo " <a href='delete_cat.php?id=$id'><button type='button' class='btn btn-sm btn-outline-danger'>Delete</button></a> </td>";
-                                    echo "<tr/>";
+                                    if ($preid == $id) {
+                                        echo "<td>" . "=>" . "</td><td>" . "=>" . 
+                                        "</td><td>" . "$row[2]" . "</td><td>" . "$row[3]" . "</td><td>" . "" . "</td>";
+                                        echo "<tr/>";
+                                    }else {
+                                        echo "<td>" . $id . "</td><td>" . $row[1] . 
+                                        "</td><td>" . "$row[2]" . "</td><td>" . "$row[3]" . "</td><td>" . "" . "</td>";
+                                        echo "<tr/>";
+                                    }
+                                    $preid = $id;
                                 }
                             
                         }
