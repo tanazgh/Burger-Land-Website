@@ -22,24 +22,25 @@ $comment_sql = "SELECT c.score, c.caption, u.username FROM food f
 
 $error ="";
 if (isset($_POST['submit'])) {
-    $caption = $_POST['caption'];
-    $score = $_POST['score'];
-    $userid = $_SESSION['userid'];
-    
-    if(!empty($caption) && !empty($score)) {
-        if ($_SESSION['signin'] == 1) {
-            $sql = "INSERT INTO comment (score, caption, food_id, `user_id`)
-                    VALUES ($score, '$caption', $id, $userid)";
-        }else {
-            $error = "You Must Login!";
-        }
-        if (mysqli_query($con, $sql)) {
-            header("location: food_view.php");
-        }   
+    if (!isset($_SESSION['signedin']) or !isset($_SESSION['userid']) or $_SESSION['signedin'] != 1) {
+        $error = "You Must Login!";
     }else {
-        $error = "Fill Again!";
+        $caption = $_POST['caption'];
+        $score = $_POST['score'];
+        $userid = $_SESSION['userid'];
+        
+        if(!empty($caption) && !empty($score)) {
+            $sql = "INSERT INTO comment (score, caption, food_id, `user_id`)
+                        VALUES ($score, '$caption', 1, $userid)";
+            if (mysqli_query($con, $sql)) {
+                header("location: food_view.php");
+            }
+        } else {
+            $error = "Fill All Parts!";
+        }
     }
 }
+
      
 ?>
 
@@ -104,19 +105,21 @@ if (isset($_POST['submit'])) {
                                         echo "<p class='card-text'>$row1[1]</p></div>";
                                     }
                                 }
+                                echo "<main class='form-signin w-400'>
+                                <form style='width: 600px; background-color: #ffc554; action='' method='post' class='shadow col-4 p-5 rounded' enctype='multipart/form-data'>
+                                <div class='d-flex justify-content-center align-items-center'><h1 class='h3 mb-3 card-title'>New Score & Comment</h1></div>";
+                                echo "<div class='form-floating'>
+                                <input type='number' min=1 max=5 class='form-control' style='height: 50px; font-size:16px;' placeholder='Score' name='score'>
+                                <label for='floatingInput' class='form-label'>Score</label>
+                                </div>"; 
+                                echo "<div class='form-floating'>
+                                <textarea class='form-control' aria-label='With textarea' style='height: 200px; font-size:16px' name='caption'></textarea>
+                                <label for='floatingInput' class='form-label p-2'>Caption</label>
+                                </div>";
+                                echo "<button class='w-100 btn-lg mybtn' type='submit' name='submit' value='1'>Submit</button>
+                                <span style='color: red;'>$error<span>";    
+                                echo "</form></main>";    
                                 echo "</div>";
-                                echo "<main class='form-signin w-400'>";
-                                echo "<form style='background-color: #ffc554;' action='' method='post' class='shadow col-4 p-5 rounded' enctype='multipart/form-data'>
-                                <h3 class='card-title' style='margin-left: 8px'>Add New Score & Comment</h3>
-                                <div class='form-floating'>
-                                <input type='number' max=5 min=1 class='form-control' placeholder='Score' name='score'>
-                                </div>
-                                <div class='form-floating'>
-                                <textarea class='form-control' aria-label='With textarea' name='caption'></textarea>
-                                </div>
-                                <button class='w-100 btn-lg mybtn' type='submit' name='submit' value='1'>Submit</button>
-                                <span style='color: red;'>$error<span>
-                                </form></main>";
                                 echo "</div></div>";
                             } 
                         }
