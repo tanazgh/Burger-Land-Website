@@ -79,7 +79,9 @@ function submitOrder(user){
             showConfirmButton: false,
             timer: 1500
         })
-        total_cost = 0;
+        setTimeout(function() {
+            location.href='menu.php';
+        }, 1500);
     }
 }
 
