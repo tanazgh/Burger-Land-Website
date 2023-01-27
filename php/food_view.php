@@ -40,8 +40,6 @@ if (isset($_POST['submit'])) {
         }
     }
 }
-
-     
 ?>
 
 
@@ -61,12 +59,27 @@ if (isset($_POST['submit'])) {
       <a href="/" class="logo">Burger<span class="yellow">Land</span></a>
 
       <nav class="navbar">
-        <a href="#home">Home</a>
-        <a href="#services">Services</a>
+        <a href="home.php#home">Home</a>
+        <a href="home.php#services">Services</a>
         <a href="menu.php">Menu</a>
-        <a href="#about">About Us</a>
-        <a href="#footer">Contact Us</a>
-        <a href="login.php" class="mybtn">Login</a>
+        <a href="home.php#about">About Us</a>
+        <a href="home.php#footer">Contact Us</a>
+        <?php
+          if (!isset($_SESSION['signedin']) or $_SESSION['signedin'] != 1) {
+            echo "<a href='login.php' class='mybtn'>Login</a>";
+          } else {
+            if ($_SESSION['isadmin'] == 1) {
+              echo "<img class='avatar' src='../images/admin-avatar.png' alt='...'>
+              <p class='user'><a href='dashboard.php' style='padding: 0'>" . $_SESSION['username'] . "</a></p>
+              <a class= 'mybtn' href='sign_out.php' style='margin-left: 2rem;'>Signout</a>";
+            } else {
+              echo "<img class='avatar' src='../images/burger-avatar.jpg' alt='...'>
+              <p class='user'><a href='profile.php' style='padding: 0'>" . $_SESSION['username'] . "</a></p>
+              <a class= 'mybtn' href='sign_out.php' style='margin-left: 2rem;'>Signout</a>";
+            }
+            
+          }
+        ?>
       </nav>
 
     </header>

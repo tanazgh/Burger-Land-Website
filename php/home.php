@@ -1,3 +1,8 @@
+<?php
+  session_start();
+  require('connection.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,9 +11,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BurgerLand</title>
     <!-- StyleSheets -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/styles.css" />
   </head>
-  <body>
+  <body style="height: 100%">
 
     <header class="header">
       <a href="/" class="logo">Burger<span class="yellow">Land</span></a>
@@ -19,7 +25,22 @@
         <a href="menu.php">Menu</a>
         <a href="#about">About Us</a>
         <a href="#footer">Contact Us</a>
-        <a href="login.php" class="mybtn">Login</a>
+        <?php
+          if (!isset($_SESSION['signedin']) or $_SESSION['signedin'] != 1) {
+            echo "<a href='login.php' class='mybtn'>Login</a>";
+          } else {
+            if ($_SESSION['isadmin'] == 1) {
+              echo "<img class='avatar' src='../images/admin-avatar.png' alt='...'>
+              <p class='user'><a href='dashboard.php' style='padding: 0'>" . $_SESSION['username'] . "</a></p>
+              <a class= 'mybtn' href='sign_out.php' style='margin-left: 2rem;'>Signout</a>";
+            } else {
+              echo "<img class='avatar' src='../images/burger-avatar.jpg' alt='...'>
+              <p class='user'><a href='profile.php' style='padding: 0'>" . $_SESSION['username'] . "</a></p>
+              <a class= 'mybtn' href='sign_out.php' style='margin-left: 2rem;'>Signout</a>";
+            }
+            
+          }
+        ?>
       </nav>
 
     </header>
@@ -152,7 +173,7 @@
             </div>
           </div>
 
-          <div class="link" style="margin-left= 3rem !important">
+          <div class="link" style="margin-left: 3rem !important">
             <h4>Connect with Us</h4>
             <div>
               <img src="../images/instagram.svg" alt="" />
