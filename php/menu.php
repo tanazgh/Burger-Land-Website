@@ -87,7 +87,7 @@ $sql = "SELECT f.id, f.name, f.description, f.img_addr, f.price, f.qty
                 while($row=mysqli_fetch_row($result)){
                     $food_id = $row[0]; $name = $row[1]; $description = $row[2]; $img_addr = $row[3]; $price = $row[4]; $qty = $row[5];
                     echo "<div class='col'><div class='card shadow-sm'>";
-                    echo "<img  class='bd-placeholder-img card-img-top' src='../images/$img_addr' width='100%' height='30%' alt='...'>";
+                    echo "<a href='food_view.php?id=$food_id'><img  class='bd-placeholder-img card-img-top' src='../images/$img_addr' width='100%' height='30%' alt='...'></a>";
                     echo "<div class='card-body'>";
                     echo "<h3 class='card-title'>$name</h3>";
                     echo "<p class='card-text'>$description</p>";
