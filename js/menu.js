@@ -2,7 +2,7 @@ var user_id;
 function addToCart(food_id, qty, name, price){
     var order_qty = 0;
     var total_price = 0;
-    $.get("x.php",{food_id: food_id}, function(data){
+    $.get("get_session.php",{food_id: food_id}, function(data){
         d = JSON.parse(data);
         order_qty = d.order_qty;
         total_price = parseFloat(d.total_price);
@@ -11,33 +11,35 @@ function addToCart(food_id, qty, name, price){
         if(order_qty > qty){
             order_qty--;
             total_price -= price;
-            alert("Sorry, no more remains!");
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: `No More ${name} Remains!`,
+                showConfirmButton: false,
+                timer: 3000
+            })
         }else{
-            $.post("y.php", {total_price: total_price, food_id: food_id, order_qty: order_qty});
+            $.post("set_session.php", {total_price: total_price, food_id: food_id, order_qty: order_qty});
         }
         setFoodNumber(food_id, qty, name, price, order_qty);
-        setCart();
+        setCart(food_id, name, price, order_qty, total_price);
     });
-    // $.get("x.php",{ttt: "jj", food_id: food_id, qty: qty}, function(data){
-    //     document.getElementById("x").innerHTML = data;
-    // });
 }
 
 function deleteFromCart(food_id, qty, name, price){
     var order_qty = 0;
     var total_price = 0;
-    $.get("x.php",{food_id: food_id}, function(data){
+    $.get("get_session.php",{food_id: food_id}, function(data){
         d = JSON.parse(data);
         order_qty = d.order_qty;
-        total_price = d.total_price;
+        total_price = parseFloat(d.total_price);
+        order_qty--;
+        total_price -= price;
+    
+        $.post("set_session.php", {total_price: total_price, food_id: food_id, order_qty: order_qty});
+        setFoodNumber(food_id, qty, name, price, order_qty);
+        setCart(food_id, name, price, order_qty, total_price);
     });
-    order_qty--;
-    total_price -= price;
-
-    $.post("y.php", {total_price: total_price, food_id: food_id, order_qty: order_qty});
-    alert(order_qty);
-    setFoodNumber(food_id, qty, name, price, order_qty);
-    setCart();
 }
 
 function setFoodNumber(food_id, qty, name, price, order_qty){
@@ -55,36 +57,32 @@ function setFoodNumber(food_id, qty, name, price, order_qty){
     }
 }
 
-function setCart(){
-    // document.getElementById("order-list").innerHTML = 
-    // var ele = document.getElementById("order-list");
-    // ele.innerHTML = "";
-    // for(var food of foods){
-    //     if(food.qty > 0){
-    //         ele.innerHTML += `<div class="d-flex justify-content-between">
-    //             <div>${food.name} <span class="yellow">X${food.qty}</span></div>
-    //             <div>${food.price}</div>
-    //             </div>
-    //             <hr>`;
-    //     }
-    // }
-    // ele.innerHTML += `<div class="d-flex justify-content-between">
-    // <div class="yellow">Total</div>
-    // <div>${total_cost.toFixed(2)}</div>
-    // </div>`;
+function setCart(food_id, name, price, order_qty, total_price){
+    var ele = document.getElementById(`l${food_id}`);
+    if(order_qty != 0){
+        ele.innerHTML = `<div class="d-flex justify-content-between">
+        <div>${name} <span class="yellow">X${order_qty}</span></div>
+        <div>${price}</div>
+        </div>
+        <hr>`;
+    }else{
+        ele.innerHTML = "";
+    }
+    document.getElementById("total_price").innerHTML = total_price.toFixed(2);
 }
 
 function submitOrder(user){
     if(user === undefined){
-        alert('please login then complete your order');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `Please Login Then Complete Your Order`,
+            showConfirmButton: false,
+            timer: 3000
+        })
     }else{
-        var ajaxURL = 'insert_cart.php';
+        var ajaxURL = 'submit_order.php';
         $.post(ajaxURL, {});
-        ajaxURL = 'submit_order.php';
-        for(var food of foods){
-            var data = {food_id: food.id, qty: food.qty};
-            $.post(ajaxURL, data);
-        }
         Swal.fire({
             position: 'center',
             icon: 'success',

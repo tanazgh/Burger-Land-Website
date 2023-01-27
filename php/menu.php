@@ -7,6 +7,8 @@ require('connection.php');
 $sql = "SELECT f.id, f.name, f.description, f.img_addr, f.price, f.qty
         from food as f join cat as c on f.cat_id = c.id where c.title = ";
 
+$food_sql = "SELECT f.id, f.name, f.price from food as f";
+
 $foods = array();
 $total_price = 0;
 if(isset($_SESSION['foods'])){
@@ -38,10 +40,25 @@ if(isset($_SESSION['foods'])){
         <nav class="navbar">
             <a href="home.php">Home</a>
             <a href="home.php#services">Services</a>
-            <a class="current" href="#">Menu</a>
+            <a href="#">Menu</a>
             <a href="home.php#about">About Us</a>
             <a href="home.php#footer">Contact Us</a>
-            <a href="login.php" class="mybtn">Login</a>
+            <?php
+            if (!isset($_SESSION['signedin']) or $_SESSION['signedin'] != 1) {
+                echo "<a href='login.php' class='mybtn'>Login</a>";
+            } else {
+                if ($_SESSION['isadmin'] == 1) {
+                echo "<img class='avatar' src='../images/admin-avatar.png' alt='...'>
+                <p class='user'><a href='dashboard.php' style='padding: 0'>" . $_SESSION['username'] . "</a></p>
+                <a class= 'mybtn' href='sign_out.php' style='margin-left: 2rem;'>Signout</a>";
+                } else {
+                echo "<img class='avatar' src='../images/burger-avatar.jpg' alt='...'>
+                <p class='user'><a href='profile.php' style='padding: 0'>" . $_SESSION['username'] . "</a></p>
+                <a class= 'mybtn' href='sign_out.php' style='margin-left: 2rem;'>Signout</a>";
+                }
+
+            }
+            ?>
         </nav>
 
         </header>
@@ -62,8 +79,39 @@ if(isset($_SESSION['foods'])){
         <div class="mysidebar rounded">
             <h3><img src="../images/cart.svg"> your cart</h3>
             <br>
-            <div id="order-list"></div>
-            <div id="total_cost"></div>
+            <div id="order-list">
+                <div></div>
+                <div></div>
+                <div></div>
+                <?php 
+                if (($result=mysqli_query($con,$food_sql))){
+                    while($row=mysqli_fetch_row($result)){
+                        $fid = $row[0];
+                        if(isset($foods[$fid])){
+                            $name = $row[1];
+                            $price = $row[2]; 
+                            echo "<div id='l$fid'><div class='d-flex justify-content-between'>
+                            <div>$name<span class='yellow'>X$foods[$fid]</span></div>
+                            <div>$price</div>
+                            </div>
+                            <hr></div>";
+                        }else{
+                            echo "<div id='l$fid'></div>";
+                        }
+                    }
+                }
+                ?>
+            </div>
+            <div class='d-flex justify-content-between'>
+                <div class="yellow"><strong>Total</strong></div>
+                <div id="total_price">
+                    <?php
+                    if($total_price != 0){
+                        echo number_format($total_price, 2);
+                    }
+                    ?>
+                </div>
+            </div>
             <br>
             <?php
             $user = '';
@@ -88,7 +136,6 @@ if(isset($_SESSION['foods'])){
                 $count += 1;
             }
         }
-        print_r($_SESSION);
         for($i = 0; $i < count($cats); $i++){
             $sql_temp = $sql . "'$cats[$i]'";
             echo '<div class="album py-5 bg-light myalbum rounded"><h1 class="cat">' . $cats[$i] . '</h1>
@@ -105,8 +152,8 @@ if(isset($_SESSION['foods'])){
                     echo "<div id='number$food_id'>";
                     if(isset($foods[$food_id]) && $foods[$food_id] > 0){
                         $order_qty = $foods[$food_id];
-                        echo "<button class='plus' onclick='addToCart($food_id, $qty," . '"$name"' . ", $price)'>
-                        <img src='../images/plus.svg'></button>$order_qty<button class='minus' onclick='deleteFromCart($food_id, $qty, " . '"${name}"' . ", ${price})'>
+                        echo "<button class='plus' onclick='addToCart($food_id, $qty, " . '"' . $name . '"' .  ", $price)'>
+                        <img src='../images/plus.svg'></button>$order_qty<button class='minus' onclick='deleteFromCart($food_id, $qty, " . '"' . $name . '"' .  ", $price)'>
                         <img src='../images/minus.svg'></button>";
                     }else{
                         echo "<a onclick='addToCart($food_id, $qty, " . '"' . $name . '"' . ", $price)' class='orderbtn bi bi-cart-plus'>";
@@ -117,7 +164,7 @@ if(isset($_SESSION['foods'])){
                         echo "add to cart</a>";
                     }
                     echo "</div>";
-                    echo "<small class='price'>" . $price . "$</small>";
+                    echo "<small class='price'>" . number_format($price, 2) . "$</small>";
                     echo "</div></div></div></div>";
                 }
     
