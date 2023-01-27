@@ -148,17 +148,19 @@ section {
 }
 
 .mybtn {
+  border: 0;
+  border-bottom: 2px solid transparent;
   display: inline-block;
   color: var(--yellow);
   background-color: var(--btn-yellow);
   padding: 1rem;
   border-radius: 0.5rem;
   transition: var(--transition);
-  border: 0;
 }
 
 .mybtn:hover {
   box-shadow: var(--box-shadow);
+  border-color: var(--yellow);
 }
 
 .header .hamburger img {
@@ -647,6 +649,7 @@ section.app .content .links img {
   border: 2px solid var(--yellow);
   border-radius: 0.5rem;
   padding: 0.5rem;
+  cursor: pointer;
 }
 
 .orderbtn:hover{
@@ -684,10 +687,10 @@ section.app .content .links img {
   padding: 5px;
 }
 
-.sidebar{
+.mysidebar{
   width: 27%;
   margin: 1rem 0.5rem;
-  background-color: var(--btn-yellow);
+  background-color: var(--bg-yellow);
   /* border: 1px solid var(--yellow); */
   padding: 1rem;
 }
