@@ -8,7 +8,8 @@ $info_sql = "SELECT * FROM user where id=$id";
 $preorder_sql = "SELECT c.id, c.date, f.name, o.order_qty
                 FROM cart c inner join `order` o on c.id = o.cart_id
                 inner join food f on f.id = o.food_id
-                where c.user_id = $id";
+                where c.user_id = $id
+                group by o.id";
 $_SESSION['neworder'] = 0;
 $sty = "";
 
@@ -116,28 +117,30 @@ if (isset($_GET['page'])) {
                 <div class="container-fluid" id="preorder">
                     <h4>Pre Orders:</h4>
                     <?php
-                        echo "<table class='table table-striped'><tr><th>#</th><th>Date</th><th>Food</th><th>Quantity</th><th></th><th></th></tr>";
                         if (($result=mysqli_query($con,$preorder_sql)))
                         {
                             $preid = 0;
                             while($row=mysqli_fetch_row($result))
                                 {
-                                    $id=$row[0];
-                                    echo "<tr>";
+                                    $id=$row[0]; 
                                     if ($preid == $id) {
-                                        echo "<td>" . "=>" . "</td><td>" . "=>" . 
-                                        "</td><td>" . "$row[2]" . "</td><td>" . "$row[3]" . "</td><td>" . "" . "</td>";
-                                        echo "<tr/>";
+                                        echo "<tr><td>" . "#" .  
+                                        "</td><td>" . "$row[2]" . "</td><td>" . "$row[3]" . "</td><td>" . "" . "</td>
+                                        <td>" . "" . "</td><td>" . "" . "</td><td>" . "" . "</td><td>" . "" . "</td></tr>";
+                                        
                                     }else {
-                                        echo "<td>" . $id . "</td><td>" . $row[1] . 
-                                        "</td><td>" . "$row[2]" . "</td><td>" . "$row[3]" . "</td><td>" . "" . "</td>";
-                                        echo "<tr/>";
+                                        if ($preid != 0) {
+                                            echo "</table>";
+                                        }
+                                        echo "<table class='table table-striped' style='background-color: #fff4d4;'>";
+                                        echo "<tr><th>$id</th><th>Food</th><th>Quantity</th><th>$row[1]</th><th></th><th></th><th></th><th></th></tr>";
+                                        echo "<tr><td>" . "#" . "</td><td>" . $row[2] . 
+                                        "</td><td>" . "$row[3]" . "</td><td>" . "" . "</td><td>" . "" . "</td></tr>";
                                     }
                                     $preid = $id;
                                 }
-                            
+                            echo "</table>";
                         }
-                        echo "</table>";
                     ?>
                 </div>
                 </main>
