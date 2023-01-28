@@ -698,3 +698,17 @@ section.app .content .links img {
   width: 80%;
   margin: 1rem 0.5rem;
 }
+
+.commentL{
+  border-radius: 10px;
+  border-top-left-radius: 0 !important;
+  background-color: #fcd381;
+  margin-right: 20px;
+}
+
+.commentR{
+  border-radius: 10px;
+  border-top-right-radius: 0 !important;
+  background-color: var(--yellow);
+  margin-left: 20px;
+}
