@@ -699,16 +699,9 @@ section.app .content .links img {
   margin: 1rem 0.5rem;
 }
 
-.commentL{
+.comment{
   border-radius: 10px;
   border-top-left-radius: 0 !important;
-  background-color: #fcd381;
-  margin-right: 20px;
-}
-
-.commentR{
-  border-radius: 10px;
-  border-top-right-radius: 0 !important;
   background-color: var(--yellow);
-  margin-left: 20px;
+  margin-right: 20px;
 }
